@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计算属性</title>
+</head>
+<body>
+    <div id="demo">
+        <div>{{text}}</div>
+        <!-- 字符串用逗号分隔返回数组，反转，变成数字 -->
+        <div>{{text.split(',').reverse().join(',')}}</div>
+        <div>使用计算属性</div>
+        <div>{{reverseText}}</div>
+        <div>计算属性的缓存</div>
+        <div>{{now}}</div>  <!-- 当前距1970年的时间戳 -->
+        <div>通过methods拿到时间戳（计算属性直接写，方法需要加括号）</div>
+        <div>{{thisTime()}}</div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
+<script>
+
+    //将'123, 456, 789'变成789, 456, 123
+    var app = new Vue({
+        el: "#demo",
+        data: {
+            text: '123, 456, 789'
+        },
+        //定义计算属性
+        //如果计算属性直接跟一个function，默认是getter函数
+        computed: {
+            reverseText: function() {
+                return this.text.split(',').reverse().join(',');   //通过this拿text
+            },
+            now: function() {
+                return Date.now();
+            }
+        },
+        methods: {
+            thisTime: function(){
+                return Date.now();
+            }
+        }
+    })
+</script>    
+</body>
+</html>

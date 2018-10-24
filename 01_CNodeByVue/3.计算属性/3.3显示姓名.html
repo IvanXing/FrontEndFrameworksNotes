@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计算属性</title>
+</head>
+<body>
+    <div id="abc">
+       <span>我的姓名是{{fullName}}</span>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
+<script>
+    var app2 = new Vue({
+        el: "#abc",            //不加载至页面
+        data: {
+            firstName: 'Kris',
+            lastName: '郭德纲',
+        },         
+    
+        //定义计算属性
+        computed: {
+            //计算属性的默认用法是getter函数 get得到
+            // fullName: function() {
+            //    return this.firstName + ' ' +this.lastName;
+            // },
+
+            fullName:{
+                get: function(){
+                    return this.firstName + ' ' +this.lastName; 
+                },
+                //设置值 需要传入
+                //替换名字，调用set方法
+                set: function(newValue){
+                    //newValue是liu，bei  app2.fullName = 'liu, bei'; 赋值
+                    var names = newValue.split(','); //分隔为数组
+                    this.firstName = names[0];
+                    this.lastName = names[1];
+
+                }
+            }
+        },
+    })
+</script>    
+</body>
+</html>

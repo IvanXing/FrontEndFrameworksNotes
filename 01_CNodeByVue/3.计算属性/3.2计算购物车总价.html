@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计算属性</title>
+</head>
+<body>
+    <div id="demo">
+       <span>两个购物车总计{{prices}}</span>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
+<script>
+    var app2 = new Vue({
+        el: "#abc",            //不加载至页面
+        data: {
+            msg: '我是app2中的内容',
+        }          
+    })
+
+    var app1 = new Vue({
+        el: "#demo",
+        data: {
+            pakage1:[
+                { name: 'iphone', price: 6999, count: 2},
+                { name: 'ipad', price: 3999, count: 1}
+            ],
+            pakage2:[
+                { name: 'iphone8', price: 6566, count: 3},
+                { name: 'ipad', price: 3999, count: 6}
+            ]
+        },
+        //定义计算属性
+        computed: {
+            prices: function() {
+                var prices = 0;
+                for( i = 0; i < this.pakage1.length; i++){
+                    prices += this.pakage1[i].price * this.pakage1[i].count;
+                }
+                for( j = 0; i < this.pakage2.length; j++){
+                    prices += this.pakage2[j].price * this.pakage2[j].count;
+                }
+                return prices + '--' + app2.msg;  //计算属性还可以依赖多个 Vue 实例的数据  用了app2的msg
+            }
+        },
+    })
+</script>    
+</body>
+</html>

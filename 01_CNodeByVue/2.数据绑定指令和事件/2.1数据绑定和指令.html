@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据绑定和指令</title>
+</head>
+<body>
+    <div id="app">
+        {{msg}}
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
+<script>
+    //实例化Vue对象
+    var app = new Vue({
+        el: "#app",     //element，用于指定页面中已存在的DOM元素，挂载到DOM中，也可以是CSS
+        data: {         //声明应用内需要双向绑定的数据
+            msg: "Vue学习开始了",
+            a: 2
+        },
+        //生命周期
+        created: function(){
+            alert('vue实例，创建完成，还未挂载到DOM');
+        },
+        mounted: function(){
+            alert('vue实例，已经挂载到DOM');
+        }
+    });
+    
+    /*
+    ** 访问属性
+    */
+    console.log(app.$el)   //访问实例化对象的属性，加$
+    console.log(app.$data)
+    console.log(app.msg)   //访问data元素的属性，直接点出来
+</script>  
+    
+</body>
+</html>

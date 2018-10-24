@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>过滤器、指令和事件、语法糖</title>
+    <style>
+        .transRed{ background-color: red; height: 30px;}
+    </style>
+</head>
+<body>
+    <div id="dateApp">
+        <div>过滤器</div>
+        <div>{{date | formatDate}}</div>
+        <!-- 过滤器可以串联，过滤器中第一个参数默认是处理的value，传入参数往后排 -->
+        <div>指令和事件</div>
+        <div v-text="apple"></div>
+        <div v-html="banana"></div>
+        <div v-bind:class= "className">v-bind变红</div>
+        <div>v-on的用法,绑定事件监听器</div>
+        <button v-on:click = "count">{{countNum}}</button>
+        <div>语法糖</div>
+        <button @click = "count">{{countNum}}</button>
+        <div :class= "className">v-bind变红</div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
+<script>
+    //需求：在页面中实时显示当前时间
+
+    //在月日小时小于10时补0
+    var plusDate = function(value){
+        return value < 10 ? '0'+value : value;
+    }
+
+    //实例化对象
+    var app = new Vue({
+        el: "#dateApp",
+        data: {
+            date: new Date(),
+            apple: '苹果',
+            banana: '<span style="color: yellow">香蕉</span>',
+            className: 'transRed',
+            countNum: 0,
+        },
+        //定义过滤器，实例添加filters属性，不止一个
+        filters: {
+            formatDate: function(value){    
+                var date = new Date(value);    //value传入的是字符串，先转化成date类型
+                var year = date.getFullYear(); //已经是date类型
+                var month = plusDate(date.getMonth() + 1);
+                var day = plusDate(date.getDate());
+                var hours = plusDate(date.getHours());
+                var min = plusDate(date.getMinutes());
+                var sec = plusDate(date.getSeconds());
+                return year + '年' + month + '月' + day + '日' + hours + '时' + min + '分' + sec + '秒';
+            }
+        },
+        //方法都写在methods中
+        methods: {
+            count: function(){
+                this.countNum = this.countNum + 1;  //获取自己的countNum，点击一次加1
+            }
+        },
+        //实现自动刷新
+        mounted: function() {
+            var _this = this;  //this代表本身Vue实例
+            //setInterval()定时器  xx毫秒执行一次function里的方法
+            this.timer = setInterval(function(){
+                _this.date = new Date();                    //访问date不需要$
+            },1000)
+        },
+        //vue实例销毁时，清除定时器
+        beforeDestory: function() {
+            if(this.timer){
+                clearInterval(this.timer);      //如果定时器存在销毁定时器
+            }
+        }
+    })
+</script>    
+</body>
+</html>
