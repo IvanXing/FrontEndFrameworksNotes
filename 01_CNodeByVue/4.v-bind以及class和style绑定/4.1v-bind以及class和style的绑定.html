@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-bind</title>
+</head>
+<body>
+    <div id="app">
+        <!-- v-bind的作用是绑定活的属性 -->
+        <a v-bind:href="url">我是百度</a>
+        <img :src="imgUrl" alt="">
+    </div>
+ <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> 
+ <script>
+     var app = new Vue({
+         el: "#app",
+         data: {
+             url: 'http://www.baidu.com',
+             imgUrl: 'https://www.baidu.com/img/bd_logo1.png',
+         },
+     })
+ </script>  
+</body>
+</html>

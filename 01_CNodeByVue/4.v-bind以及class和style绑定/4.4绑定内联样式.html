@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>绑定内联样式</title>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>绑定内联样式，键代表style的属性值，值代表属性对应的值</div>
+        <div>vue中只要是大写字母，都会转化成-加小写 fontSize->font-szie (tyle="color: red; font-size: 20px;")</div>
+        <div v-bind:style="{'color': color, 'fontSize': fontsize + 'px'}">大家看看我吧</div>
+        <div>上面是对象语法，下面是数组语法</div>
+        <div v-bind:style="[styleA, styleB]"> 你也来看看</div>
+    </div>
+ <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> 
+ <script>
+
+     //需求： 点击一个按钮，来回切换背景颜色为红蓝
+
+     var app = new Vue({
+         el: "#app",
+         data: {
+             color: 'red',
+             fontsize: 20,
+         },
+         
+     })
+ </script>  
+</body>
+</html>

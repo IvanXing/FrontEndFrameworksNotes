@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>绑定class</title>
+    <style>
+        .divStyle{
+            background-color: darkred;
+            width: 100px;
+            height: 100px;
+        }
+        .borderStyle{
+            border: 10px solid blue;
+        }
+        .btnBackground{
+            background-color: red;
+        }
+        .active{
+            background-color: black;
+            width: 100px;
+            height: 100px;
+        }
+        .error{
+            border: 10px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>绑定calss之对象语法:里面是对象，键是类名，值是布尔值</div>
+        <div :class="{divStyle: isActive, borderStyle: isBorder}"></div>
+        <input type="button" value="点击我切换颜色" :class="{btnBackground: isback}" v-on:click = "changeColor">
+        <div>当 class 的表达式过长或逻辑复杂时，还可以绑定一个计算属性</div>
+        <div :class="classnames"></div>
+        <div>定calss之数组语法:数组中的成员直接对应类名</div>
+        <div :class="[activeClass, errorClass]" style="color: white">我是数组绑定class</div>
+    </div>
+ <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> 
+ <script>
+
+     //需求： 点击一个按钮，来回切换背景颜色为红蓝
+
+     var app = new Vue({
+         el: "#app",
+         data: {
+             isActive: true,
+             isBorder: true,
+             isback: true,
+             activeClass: 'active',
+             errorClass: 'error',
+         },
+         computed: {
+            classnames: function(){
+                return {
+                    active: this.isActive && !this.isBorder
+                }
+            }
+         },
+         methods: {
+            changeColor: function(){
+                this.isback = !this.isback;
+            }
+         }
+     })
+ </script>  
+</body>
+</html>
