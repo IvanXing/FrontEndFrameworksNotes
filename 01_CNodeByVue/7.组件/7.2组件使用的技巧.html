@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件使用的约定以及技巧</title>
+</head>
+<body>
+<div id="app">
+    <!-- 组件名称只能用小写字母加横杠命名 不能使用驼峰 -->
+    <!-- template中的内容必须被一个DOM元素包括 ，也可以嵌套 -->
+    <!-- 组件中可以使用—data,computed,methods，如果有data，data必须是一个方法 -->
+    <my-component></my-component>
+    <div>点击一起增加</div>
+    <button @click="plus">{{count}}</button>
+    <button @click="plus">{{count}}</button>
+    <div>点击谁谁加</div>
+    <btn-component></btn-component>
+    <btn-component></btn-component>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
+<script>
+    let add = new Vue({
+        el: '#app',
+        data:{
+            count: 1,
+        },
+        components:{
+            'my-component':{
+                template: '<div>我是个组件</div>'
+            },
+            'btn-component':{
+                template: '<button @click="count++">{{count}}</button>',
+                data:function(){
+                    return{               //data是一个方法,返回一个对象,每次点击返回的对象不一致
+                        count: 0
+                    }
+                }
+            },
+        },
+        methods:{
+            plus:function(){
+                this.count++;
+            }
+        }
+    })
+</script>     
+</body>
+</html>

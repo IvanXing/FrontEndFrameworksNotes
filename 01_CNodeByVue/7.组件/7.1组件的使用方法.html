@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件的使用方法</title>
+</head>
+<body>
+    <div id="app" style="border: 1px solid red">
+        <my-component></my-component>
+        <app-component></app-component>
+        <!-- html受限 table中只能有tr td tbody这些元素 不能再table中直接写组件 使用is属性挂载 -->
+        <table>
+            <tbody is="my-component"></tbody>
+        </table>
+    </div>
+    <div id="bpp" style="border: 1px solid green; margin-top: 20px;">
+        <my-component></my-component>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>   
+<script>
+    //注册组件（全局注册）
+    //Vue.component(tag, { ... })   第一个参数tag是组件的名称 第二个参数是渲染对象
+    Vue.component('my-component', {
+        template: '<div>我是一个组件</div>'
+    })
+    //实例化对象app
+    let app = new Vue({
+        el: '#app',
+        components:{
+            'app-component':{
+                template: '<div>我是app局部注册的一个组件</div>'
+            }
+        },
+        data:{},
+    })
+    //实例化对象bpp
+    let bpp = new Vue({
+        el: '#bpp',
+        component:{}
+    })
+</script>  
+</body>
+</html>
