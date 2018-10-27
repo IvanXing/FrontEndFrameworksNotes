@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表单与v-model</title>
+</head>
+<body>
+    <div id="app" style="margin-bottom: 200px;">
+        <!-- v-model的用法 -->
+        <div>input</div>
+        <input type="text" v-model="value">
+        <div>{{value}}</div>
+        <div>文本域</div>
+        <textarea name="" id="" cols="30" rows="10" v-model="msg"></textarea>
+        <div>{{msg}}</div>
+        <div>单选框</div>
+        <input type="radio" name="" v-bind:checked="oneradio">默认选中  <!--用v-model不生效-->
+        <div>
+            <!-- v-model绑定选中单选框的value值 -->
+            <input type="radio" name="checks" value="郭德纲" v-model="checkname">郭德纲      <!--同一个name只能选择一个互斥-->
+            <input type="radio" name="checks" value="岳云鹏" v-model="checkname">岳云鹏
+            <input type="radio" name="checks" value="张鹤伦" v-model="checkname">张鹤伦
+            <div>现在的checkname:{{checkname}}</div>
+        </div>
+        <div>复选框</div>
+        <div>单个复选框(用v-bind和v-model都可以)</div>
+        <input type="checkbox" v-bind:checked="oneradio">Paul
+        <input type="checkbox" v-model="oneradio">Harden
+        <div>多个复选框</div>
+        <div>
+            <input type="checkbox" value="蛋壳" v-model="checks">蛋壳
+            <input type="checkbox" value="PGOne" v-model="checks">PGOne
+            <input type="checkbox" value="贝贝" v-model="checks">贝贝
+            <div>现在选中了:{{checks}}</div>
+        </div>
+        <div>下拉框单选</div>
+        <div>
+            <select v-model="selected">
+                <option value="谢帝">谢帝</option>
+                <option value="马思唯">马思唯</option>
+                <option value="Ty">Ty</option>
+            </select>----------{{selected}}
+        </div>
+
+        <div>多选下拉框</div>
+        <div>
+            <select v-model="selectedmul" multiple>
+                <option value="大傻">大傻</option>
+                <option value="功夫胖">功夫胖</option>
+                <option value="西部拉客">西部拉客</option>
+            </select>----------{{selectedmul}}
+        </div>
+
+        <div>绑定值</div>
+        <!-- v-model对单个单选框不生效，用v-bind绑定结合使用 初始化是true-->
+        <input type="radio" v-model="picked" v-bind:value="value">单选值{{picked}}
+        <div>多选按钮</div>
+        <div>
+            <!-- 选中和不选中的value值不一样，选中时value1，不选中时value2 -->
+            <input type="checkbox" v-model="toggle" :true-value="value1" :false-value="value2">齐达内
+            <div>{{toggle}}</div>
+            <div>{{toggle == value1}}</div>
+            <div>{{toggle == value2}}</div>
+        </div>
+       
+
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> 
+<script>
+    let app = new Vue({
+        el: "#app",
+        data:{
+            value: '',
+            msg: '',
+            oneradio: true,
+            checkname: '张鹤伦',
+            checks: [],
+            selected: '',  //[]也可
+            selectedmul: [],  
+            picked: true,
+            value: '111',
+            toggle: true,
+            vaule1: '我被选中了',
+            value2: '我没有被选中',
+        }
+    })
+</script>    
+</body>
+</html>
