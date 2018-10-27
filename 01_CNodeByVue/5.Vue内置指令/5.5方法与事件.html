@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>方法与事件</title>
+</head>
+<body>
+    <div id="app">
+        点击次数{{count}}
+        <button @click="handle()">点击我每次加1</button>  
+        <!--写方法有接参数要加括号 不加括号默认传原生事件对象event-->
+        <button @click="handle(8)">点击我每次加8</button>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>   
+<script>
+    var app = new Vue({
+        el: '#app',
+        data:{
+            count: 0,
+        },
+        methods:{
+            handle:function(count){
+                count = count || 1;   //传入count就是count否则为1
+                this.count += count; 
+            }
+        }
+    })
+</script>  
+</body>
+</html>

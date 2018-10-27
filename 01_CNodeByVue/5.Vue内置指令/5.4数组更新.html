@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组更新</title>
+</head>
+<body>
+    <div id="app">
+        <div v-for="study in arr">{{study}}</div>
+        <button v-on:click="sortArr">点击排序</button>
+        <button v-on:click="reverseArr">点击反转</button>
+        <button @:click="changeOne">改变数组的指定项</button>
+        <button @:click="changeArrLength">改变数组的长度</button>
+        <!-- 返回字符串含有oo的项 -->
+        <div>返回字符串含有oo的项</div><span>{{matchoo}}</span>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> 
+<script>
+    var app = new Vue({
+        el: "#app",
+        data:{
+            arr:['book','pen','pencil']
+        },
+        computed:{
+            matchoo: function(){
+                //参数代表要过滤的每一项
+                return this.arr.filter(function(item){
+                    return item.match(/oo/);
+                });
+            }
+        },
+        methods:{
+            sortArr:function(){
+               this.arr.sort(function(a, b){
+                   return a.length-b.length;   //从小到大排排序
+               })
+            },
+            reverseArr: function(){
+                this.arr.reverse();
+            },
+            //改变数组的指定项（Vue检测不到）用全局方法解决 Vue.set
+            changeOne: function(){
+                this.arr[0] = 'car';
+            },
+            //改变数组的长度（Vue检测不到）
+            changeArrLength:function(){
+                this.arr.length = 1;
+            }
+        }
+    })
+    //改变Vue的第一项(数组, 改变的下标, 赋的值)
+    Vue.set(app.arr, 1, 'car');
+
+
+
+
+    // • push() 在末尾添加元素
+    // • pop() 将数组的最后一个元素移除
+    // • shift() 删除数组的第一个元素
+    // • unshift（）：在数组的第一个元素位置添加一个元素,返回长度
+    // • splice() ：可以添加或者删除函数—返回删除的元素
+        // 三个参数：
+        // * 第一个参数 表示开始操作的位置
+        // * 第二个参数表示：要操作的长度
+        // * 第三个为可选参数：添加的元素
+    // • sort（）：排序    app.arr.sort(function(){})
+    // • reverse()
+</script>     
+</body>
+</html>

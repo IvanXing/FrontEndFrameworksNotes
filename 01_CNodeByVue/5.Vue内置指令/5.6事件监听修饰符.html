@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件修饰符</title>
+</head>
+<body>
+    <div id="app">
+        <div>stop用法:阻止单击事件向上冒泡</div>
+        <div @click="divclick" style="height: 100px; width: 100px; background-color:blue;">
+            <button @click.stop="btnclick">点击</button>
+        </div>  
+        <!-- 点击button先显示button被点击又显示div被点击了，向上冒泡，需要阻止 点击事件后加.stop-->
+        <div>prevent用法:提交表单不重载页面</div>
+        <form action="" @submit.prevent="hangle">
+            <button type="submit" >提交表单</button>   
+        </form>
+        <!-- 每次提交表单都会重载页面 -->
+        <div>self的用法:只是作用在元素本身而非子元素的时候调用</div>
+        <div @click.self="divclick" style="height: 100px; width: 100px; background-color:red;">
+            <button @click.self="btnclick">点击</button>
+        </div> 
+
+        <div>once的用法</div>
+        <button @click="onceMethod">点一次执行一次</button>
+        <button @click.once="onceMethod">点无数次只执行第一次</button>
+
+        <div>键盘监听enter事件</div>
+        <input @keyup.13 = "submitMe">
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>   
+<script>
+    var app = new Vue({
+        el: '#app',
+        data:{
+            
+        },
+        methods:{
+            divclick:function(){
+                alert('div被点击了');
+            },
+            btnclick: function(){
+                alert('button被点击了');
+            },
+            hangle: function() {
+                alert('我不重载页面也不刷新');
+            },
+            onceMethod: function(){
+                alert('多少次了?');
+            },
+            submitMe: function(){
+                alert('您按下了enter键');
+            }
+        }
+    })
+</script>  
+</body>
+</html>

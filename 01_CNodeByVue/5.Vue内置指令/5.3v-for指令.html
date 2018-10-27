@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-for指令</title>
+</head>
+<body>
+    <div id="app">
+        <!-- v-for的用法:v-for写在遍历的元素上-->
+        <!-- (1)遍历多个对象 一定是遍历数组-->
+        <ul>
+            <li v-for="item in vueMethods">{{item.name}}</li>
+        </ul>
+        <!-- 带索引的写法:括号的第一个变量代表数据，第二个代表索引-->
+        <ul>
+            <li v-for="(item, index) in vueMethods">{{index}}{{item.name}}</li>
+        </ul>
+        <!-- (2)遍历一个对象的多个属性 -->
+        <div v-for="value in deYunShe">{{value}}</div>
+        <!-- 拿到key value index的写法 v-k-i 外开-->
+        <div v-for="(value, key, index) in deYunShe">第{{index}}个演员, 键是{{key}}, 值{{value}}</div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>   
+<script>
+    var app = new Vue({
+        el: "#app",
+        data:{
+            //遍历的数组
+            vueMethods:[
+                {name: '抽烟'},
+                {name: '喝酒'},
+                {name: '烫头'},
+            ],
+            //遍历对象的属性
+            deYunShe:{
+                baba: '郭德纲',
+                son: '郭麒麟',
+                fatty: '孙越',
+            }
+        }
+    })
+</script>    
+</body>
+</html>
