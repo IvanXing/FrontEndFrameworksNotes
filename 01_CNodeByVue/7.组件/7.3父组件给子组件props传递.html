@@ -31,18 +31,14 @@
                 props:['msg'],        //在props中定义的属性，都可以在组件中直接使用,msg来自父级
                 template: '<div style="border: 1px solid red;">值是：{{msg}}，长度是：{{msg.length}}</div>',
                 data:function(){      //data是来自组件自己的数据
-                    return{
-
-                    }
+                    return{ }
                 }
             },
             'bind-component':{
                 props:['msg'],       
                 template: '<div style="border: 1px solid blue;">{{msg}}</div>',
                 data:function(){     
-                    return{
-
-                    }
+                    return{}
                 }
             }
         }
