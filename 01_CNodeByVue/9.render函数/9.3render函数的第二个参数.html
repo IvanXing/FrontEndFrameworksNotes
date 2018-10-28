@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>render的第二个参数</title>
+    <style>
+        #app{ border: 2px solid black; width: 600px; height: 300px; font-weight: 700; font-size:16px; padding: 3px; margin: 0 auto; margin-top: 100px;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <child></child>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>   
+<script>
+   
+    //第二个参数可选
+    //第二个参数是数据对象 类型是Object
+    //第二个参数里有四个参数：
+    //class参数 把true的字段加入到div   style参数加入   sttrs   domProps
+    Vue.component('child',{
+        render: function(createElement){
+            return createElement({
+                template: '<div>我是little fatty</div>'
+            }, {
+                class:{
+                    foo: true,
+                    baz: false,
+                },
+                style:{
+                    color: 'red',
+                    fontSize: '16px',
+                },
+                //正常的html特性,除了style class之外的大部分属性都可以写在attrs中
+                attrs:{
+                    id: 'foo',
+                    src: 'http://baidu.com',
+                },
+                //用来写原生dom属性
+                domProps:{
+                    innerHTML: '<span style="color: blue; font-size:18px">蓝色</span>'
+                }
+            })  
+
+        }
+    })
+    
+    let app = new Vue({
+        el: '#app',
+        data:{
+
+        }
+    })
+
+</script>  
+</body>
+</html>

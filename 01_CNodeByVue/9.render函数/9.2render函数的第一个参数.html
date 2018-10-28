@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>render的第一个参数</title>
+    <style>
+        #app{ border: 2px solid black; width: 600px; height: 300px; font-weight: 700; font-size:16px; padding: 3px; margin: 0 auto; margin-top: 100px;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <child></child>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>   
+<script>
+    //render函数的第一个参数（必选）可以是 String | Object | Function
+    //String->html标签
+    //Object->一个含有数据选项的对象
+    //Function->方法返回含有数据选项的对象
+    Vue.component('child',{
+        render: function(createElement){
+
+            //alert(createElement); //Function
+
+            //第一个参数是String 渲染出一个空div<div></div>
+            //return createElement('div')  
+
+            //第一个参数是Object
+            // return createElement({
+            //     template:"<div>dodododo</div>"
+            // })
+
+            //第一个参数是Function
+            let domFun = function(){
+                return {
+                    template: "<div>参数是Function</div>"
+                }
+            }
+            return createElement(domFun());
+        }
+    })
+    
+    let app = new Vue({
+        el: '#app',
+        data:{
+
+        }
+    })
+
+</script>  
+</body>
+</html>

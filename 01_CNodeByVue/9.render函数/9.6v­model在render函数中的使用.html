@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model在render中的使用</title>
+    <style>
+        #app{ border: 2px solid black; width: 600px; height: 300px; font-weight: 700; font-size:16px; padding: 3px; margin: 0 auto; margin-top: 100px;}
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <!-- 输入内容触发input传递给父组件,通过showname传递 -->
+        <!-- <my-component :name="name" @input="showName"></my-component> -->
+        <!-- 直接用v-model 语法糖 -->
+        <my-component :name="name" v-model="name"></my-component>
+        <div>{{name}}</div>
+    </div>
+    
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>   
+<script>
+    Vue.component('my-component',{
+        render:function(createdElement){
+            let self = this;                       //指的就是当前value实例
+            return createdElement('input',{
+                domProps:{
+                    value: self.name,
+                },
+                //on中是添加事件的
+                on:{
+                    input:function(event){
+                        //此处不能直接用this
+                        self.$emit('input', event.target.value)
+                    }
+                }
+            })
+        },
+        props:['name'],
+    })
+
+    let app = new Vue({
+        el: '#app',
+        data:{
+            name: 'Jack',
+        },
+        // methods:{
+        //     showName:function(value){
+        //         this.name = value;
+        //     }
+        // }
+    })
+</script>  
+</body>
+</html>

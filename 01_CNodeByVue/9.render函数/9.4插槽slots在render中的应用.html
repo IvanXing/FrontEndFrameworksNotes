@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>插槽在render中的应用</title>
+    <style>
+        #app{ border: 2px solid black; width: 600px; height: 300px; font-weight: 700; font-size:16px; padding: 3px; margin: 0 auto; margin-top: 100px;}
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <my-component>
+            <p>锄禾日当午</p>
+            <p>汗滴禾下土</p>
+            <h3 slot="header">我是标题</h3>
+            <h5 slot="footer">我是文章最后一段</h5>
+        </my-component>
+    </div>
+    
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>   
+<script>
+
+    //第三个参数vnode是虚拟节点 不需要整个html重绘
+    Vue.component('my-component',{
+        render:function(createElement){
+            let header = this.$slots.header;   //header本身就已经是一个包含vnode的数组 调试工具可以看到
+            let main = this.$slots.default;    //锄禾日当午汗滴禾下土
+            let footer = this.$slots.footer;
+            return createElement('div', [
+                createElement('header', header),
+                createElement('main', main),
+                createElement('footer', footer),
+            ])
+        }
+    })
+    let app = new Vue({
+        el: '#app',
+        data:{
+
+        }
+    })
+</script>  
+</body>
+</html>

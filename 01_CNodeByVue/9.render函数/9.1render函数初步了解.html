@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>render函数初步了解</title>
+    <style>
+        #app{ border: 2px solid black; width: 600px; height: 300px; font-weight: 700; font-size:16px; padding: 3px; margin: 0 auto; margin-top: 100px;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <child :level="level">
+            我是蜡笔小新
+        </child>
+    </div>
+
+    <!-- template下只允许有一个子节点 -->
+    <!-- <template id="hdom">
+        <div>
+            <h1 v-if="level===1">
+                <slot> </slot>
+            </h1>
+            <h2 v-if="level===2">
+                <slot> </slot>
+            </h2>
+            <h3 v-if="level===3">
+                <slot> </slot>
+            </h3>
+        </div>
+    </template> -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>   
+    <script>
+        //使用vue组件定义
+        // Vue.component('child',{
+        //     props:['level'],
+        //     template: '#hdom',
+        // })
+
+        //使用render函数进行定义组件
+        Vue.component('child', {
+            render:function(creatElement){
+                return creatElement('h' + this.level,  this.$slots.default);
+            },
+            props:['level']
+        })
+
+        let app = new Vue({
+            el: '#app',
+            data:{
+               level: 5, 
+            }
+        })
+    </script>  
+</body>
+</html>
