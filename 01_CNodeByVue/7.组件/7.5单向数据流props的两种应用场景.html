@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>单向数据流props的两种应用场景</title>
+    <style>
+        #app{ border: 2px solid black; width: 600px; height: 300px; font-weight: 700; font-size:16px; padding: 3px; margin: 0 auto; margin-top: 100px;}
+    </style>
+</head>
+<body>
+    <!-- id=app下的所有数据都是父组件作用域 -->
+    <div id="app"> 
+        <my-component msg="我是父组件传递给子组件的数据"></my-component>
+        <!-- 需求:通过input中输入的数据直接改变width-component div的宽度 -->
+        <input type="text" v-model="width">
+        <width-component :width="width"></width-component>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
+<script>
+    //将传递进来的数据作为初始值进行保存
+    //注册组件(场景1)
+    Vue.component('my-component',{
+        props:['msg', 'width'],                     //接收数据
+        template: '<div>{{count}}</div>',           //这里是子组件的作用域
+        data:function(){                            //data必须是方法
+            return{
+                //props中的值可以通过this.xxx直接获取
+                count:this.msg                     //数据变化只需要维护count
+            }
+        }
+    })
+
+     //注册组件(场景2)  将传递进来的数据通过计算属性进行重新计算
+     Vue.component('width-component',{
+        props:['width'],                   
+        template: '<div :style="style"></div>',     //子组件中重新计算的style
+        data:function(){                         
+            return{
+            }
+        },
+        computed:{
+            style:function(){
+                return { 
+                    width: this.width + 'px',
+                    background: 'red',
+                    height: '30px',
+                }
+            }
+        }
+    })
+
+    let app = new Vue({
+        el: '#app',
+        data:{
+           width: 0,   //width仅仅是个数据，改变样式还需加样式，子组件中使用计算属性
+        }
+    })
+</script>    
+</body>
+</html>
