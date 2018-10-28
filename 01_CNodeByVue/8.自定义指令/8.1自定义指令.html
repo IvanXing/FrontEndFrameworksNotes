@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义指令</title>
+    <style>
+        #app{ border: 2px solid black; width: 600px; height: 300px; font-weight: 700; font-size:16px; padding: 3px; margin: 0 auto; margin-top: 100px;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <span>获取焦点:</span><input type="text" v-focus>
+        <hr>
+        <!-- 绑定值的字符串 ——–expression-->
+        <div v-cuihua:goudan.a.b.c="obq">
+
+        </div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
+<script>
+    //打开页面自动获取焦点指令
+    Vue.directive('focus',{
+        //指令的选项,勾子函数，插入到父节点时就调用，所以选择inserted
+        //勾子函数的参数 el: 指令所绑定的元素，可以用来直接操作 DOM 
+        inserted:function(el){
+            el.focus();
+        }
+    });
+
+     Vue.directive('cuihua',{
+         //只调用一次，指令第一次绑定到元素时调用   vnode虚拟节点
+        bind:function(el, binding, vnode){
+            let keys = [];
+            for(let key in vnode){
+                keys.push(key);
+            }
+            el.innerHTML = 
+                        'name----'+ binding.name + '<br>' +
+                        'value----'+ binding.value + '<br>' +
+                        'expression----'+ binding.expression + '<br>' +
+                        'argument----'+ binding.arg + '<br>' +
+                        'modifiers----'+ JSON.stringify(binding.modifiers) + '<br>' +
+                        'vnodes中的keys---' + keys.join('--') + '<br>'
+        }
+                        // name----cuihua
+                        // value----我是自定义指令绑定的值
+                        // expression----obq
+                        // argument----goudan
+                        // modifiers----{"a":true,"b":true,"c":true}
+
+                        //vnodes中的keys---tag--data--children--text--elm--ns--context--fnContext--fnOptions--fnScopeId--key--componentOptions--componentInstance--parent--raw--isStatic--isRootInsert--isComment--isCloned--isOnce--asyncFactory--asyncMeta--isAsyncPlaceholder
+    });
+
+    let app = new Vue({
+        el: '#app',
+        data:{
+            obq: "我是自定义指令绑定的值",
+        }
+    })
+</script>   
+</body>
+</html>
