@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>陌生组件的通信</title>
+    <style>
+        #app{ border: 2px solid black; width: 600px; height: 300px; font-weight: 700; font-size:16px; padding: 3px; margin: 0 auto; margin-top: 100px;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <my-acomponent ref="a"></my-acomponent>
+        <my-bcomponent ref="b"></my-bcomponent>
+        <chlid-bcomponent ref="c"></chlid-bcomponent> --- {{msg}}
+        <br/>
+        <button @click="getChildData">我是父组件的按钮 我要拿到子组件的内容</button>
+        <div>{{formChild}}</div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
+<script>
+    //A和B是两个互不相关的组件
+    Vue.component('my-acomponent',{
+        template: '<div><button @click="handle">点击我向B组件传递数据</button></div>',
+        data:function(){
+            return {
+                aaa: '我是来自A组件的内容',
+                msg: '我是A中的msg',
+            }
+        },
+        methods:{
+            handle:function(){
+                //拿到根组件中的bus监听lala传递aaa
+                this.$root.bus.$emit('lala', this.aaa);
+            }
+        }
+    })
+
+    Vue.component('my-bcomponent',{
+        template: '<div>我是B组件</div>',
+        created:function(){
+            //A组件在实例创建时候就监听事件---lala事件  勾子函数创建时候监听
+            this.$root.bus.$on('lala', function(value){
+                alert(value);
+            })
+        },
+        data:function(){
+            return {
+                msg: '我是B中的msg',
+            }
+        },
+    })
+
+    //这是一个子组件 父组件是#app
+     Vue.component('chlid-bcomponent',{
+        template: '<div><button @click="setFatherData">通过点击我修改父亲的数据</button></div>',
+        methods:{
+            setFatherData: function(){
+                //父链
+                this.$parent.msg = '数据已经修改了';
+            }
+        },
+        data:function(){
+            return {
+                msg: '我是C中的msg',
+            }
+        },
+       
+    })
+
+    let app = new Vue({
+        el: '#app',
+        data:{
+            //涉及陌生组件通信 根组件中定义一个空bus作为中介
+            bus: new Vue(),
+            msg: '数据还未修改',
+            formChild:'还未拿到',
+        },
+        methods:{
+            getChildData:function(){
+                //用来拿子组件中的内容  $refs  拿到ref=a组件中的内容
+                this.formChild = this.$refs.a.msg;
+            }
+        }
+
+    })
+</script>    
+</body>
+</html>

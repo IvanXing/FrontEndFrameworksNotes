@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据验证</title>
+    <style>
+        #app{ border: 2px solid black; width: 600px; height: 300px; font-weight: 700; font-size:16px; padding: 3px; margin: 0 auto; margin-top: 100px;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <my-component myMsg="lalala"></my-component>   
+        <!--转换成mymsg 组件中接收不到   Prop "mymsg" is passed to component <Anonymous>-->
+        <my-component my-msg="lalala"></my-component> 
+        <!-- 绑定活的属性用v-bind -->
+        <type-component :a="a" :b="b" :c="c"></type-component>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
+<script>
+    //数据流命名的一些注意事项
+    Vue.component('my-component',{
+        props:['myMsg'],                               //props驼峰短横线随意  html中只能短横线
+        template: '<div>{{myMsg}}{{abc}}</div>',       //template中必须驼峰
+        data: function(){
+            return{
+                abc: this.myMsg,                       //this.xxx也只能用驼峰
+            }
+        }
+    })
+    //组件内的数据验证(会验证类型 类型错误也会渲染)
+    Vue.component('typeComponent', {
+        props:{
+            a:Number ,                            //验证是不是Number类型
+            b:[String, Number],                   //两种类型都可以用数组
+            //必须是布尔类型 默认是true 是否必须属性    validatora验证函数
+            c:{
+                type: Boolean,
+                required: true,
+                default: true,
+            }
+        },
+        template: '<div>{{a}}--{{b}}--{{c}}</div>',
+        data: function(){
+            return {}
+        },
+    })
+    let app = new Vue({
+        el: '#app',
+        data:{
+            a: 1,
+            b: 666,
+            c: '',
+        }
+    })
+</script>    
+</body>
+</html>
