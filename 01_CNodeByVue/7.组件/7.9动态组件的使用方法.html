@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动态组件使用方法</title>
+    <style>
+        #app{ border: 2px solid black; width: 600px; height: 300px; font-weight: 700; font-size:16px; padding: 3px; margin: 0 auto; margin-top: 100px;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 动态绑定要用v-bind -->
+        <component :is="thisView"></component>
+        <button @click="handleView('A')">我是A</button>
+        <button @click="handleView('B')">我是B</button>
+        <button @click="handleView('C')">我是C</button>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
+<script>
+    //需求：通过点击不同的按钮切换不同的视图
+    Vue.component('comA',{
+        template: '<div>实践者的研究方法</div>',
+    })
+    Vue.component('comB',{
+        template: '<div>深入理解计算机系统</div>',
+    })
+    Vue.component('comC',{
+        template: '<div>数据结构</div>',
+    })
+    let app = new Vue({
+        el: '#app',
+        data:{
+            thisView: 'comA',
+        },
+        methods:{
+            handleView:function(tag){
+                this.thisView = 'com' + tag;
+            }
+        }
+    })
+</script>    
+</body>
+</html>

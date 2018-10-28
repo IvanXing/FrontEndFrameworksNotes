@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>作用域插槽</title>
+    <style>
+        #app{ border: 2px solid black; width: 600px; height: 300px; font-weight: 700; font-size:16px; padding: 3px; margin: 0 auto; margin-top: 100px;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <my-component>
+            <!-- 2.5.0之后可以不写在template中 -->
+            <template slot="abc" slot-scope="temp">   <!--temp是自定义临时变量名  name拿不到-->
+                {{temp.text}}
+                {{temp.ss}}
+                <!-- {{temp.name}} -->
+            </template>
+            <p slot="abc" slot-scope="props">
+                    {{props.text}}
+                    {{props.ss}}
+            </p>
+        </my-component>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
+<script>
+    Vue.component('my-component',{
+        template: '<div><slot text="我是来自子组件的数据" ss="随便" name="abc"></slot></div>',
+    })
+    let app = new Vue({
+        el: '#app',
+        data:{
+            
+        }
+    })
+</script>    
+</body>
+</html>

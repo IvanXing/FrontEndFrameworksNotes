@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>访问slot</title>
+    <style>
+        #app{ border: 2px solid black; width: 600px; height: 300px; font-weight: 700; font-size:16px; padding: 3px; margin: 0 auto; margin-top: 100px;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>单个插槽</div>
+        <my-component>我是父组件插入的内容:{{message}}</my-component>
+        <my-component></my-component>
+        <div>具名插槽</div>
+        <name-component>
+            <h3 slot="header">我是标题</h3>
+            <p>我是正文内容</p>
+            <p>我也是正文内容</p>
+            <p slot="footer">我还是正文内容</p>
+        </name-component>
+    </div>
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
+<script>
+
+    //单个插槽示例组件
+    Vue.component('my-component',{
+        template: '<div>\
+                    <slot>\
+                        如果父组件没有插入内容，我就作为默认出现\
+                    </slot>\
+                   </div>',
+    })
+
+    //具名插槽示例组件 DOM结构变化了
+    Vue.component('name-component',{
+        template: '<div>\
+                    <div class="header">\
+                        <slot name="header">\
+                        </slot>\
+                    </div>\
+                    <div class="contatiner">\
+                        <slot>\
+                        </slot>\
+                    </div>\
+                    <div class="footer">\
+                        <slot name="footer">\
+                        </slot>\
+                    </div>\
+                   </div>',
+        //Vue实例挂载结束时           
+        mounted:function(){
+            //访问插槽
+            let header = this.$slots.header;
+            let text = header[0].elm.innerText;
+            console.log(header);
+            console.log(text)
+        }           
+    })
+
+    let app = new Vue({
+        el: '#app',
+        data:{
+            message: '我是父组件的message'
+        }
+    })
+</script>    
+</body>
+</html>
