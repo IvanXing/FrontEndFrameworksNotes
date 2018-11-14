@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>05_components_composing</title>
+</head>
+<body>
+
+  <div id="example"></div>
+
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/prop-types.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
+
+  //state是内部数据  props是外部传入组件的数据
+
+    /*
+    组件化步骤：
+    1)拆分组件: 拆分界面,抽取组件
+    2)实现静态组件: 使用组件实现静态页面效果
+    3)实现动态组件
+        ① 动态显示初始化数据
+        ② 交互功能(从绑定事件监听开始)
+     */
+
+     /*
+      问题： 数据保存在哪个组件内？
+          看数据是某个组件需要（给它），还是某些组件需要（给共同的父组件）
+      问题： 需要在子组件中改变父组件的状态
+          子组件中不能直接改变父组件的状态
+          状态在哪个组件，更新状态的行为就应该定义在哪个组件
+          解决：父组件定义函数，通过props传递给子组件，子组件调用    
+     */
+
+    // 应用组件（最外面的）
+    class App extends React.Component {
+      constructor (props) {
+        super(props)
+        // 初始化状态
+        this.state = {
+          todos: ['吃饭', '睡觉', '打豆豆']
+        }
+        this.add = this.add.bind(this)  //有箭头函数就不需要了
+      }
+
+      add (todo) {
+        //this.state.todos.unshift(todo) 不能这么写
+        const {todos} = this.state
+        //放在最前面 unshift
+        todos.unshift(todo) 
+        //更新状态
+        //state是父组件的state 子组件中不能setState
+        this.setState({todos})  
+      }
+
+      render () {
+        const {todos} = this.state
+        //只能有一个根标签
+        return (
+          //add函数传递到子组件 组件对象中this.add
+          <div>
+            <TodoAdd add={this.add} count={todos.length} />
+            <TodoList todos={todos} />
+          </div>
+        )
+      }
+    }
+
+    // 添加todo组件（添加部分）
+    class TodoAdd extends React.Component {
+      constructor (props) {
+        super(props)
+        this.addTodo = this.addTodo.bind(this)
+      }
+
+      addTodo () {
+        // 读取输入数据 trim去掉空格
+        const text = this.input.value.trim()
+        // 查检
+        if(!text) {
+          return
+        }
+        // 保存到todos 通过属性把add函数传给了子组件
+        this.props.add(text)
+        // 清除输入
+        this.input.value = ''
+      }
+
+      render () {
+        return (
+          <div>
+            <h2>Simple TODO List</h2>
+            <input type="text" ref={input => this.input=input}/>
+            <button onClick={this.addTodo}>Add #{this.props.count}</button>
+          </div>
+        )
+      }
+    }
+    TodoAdd.propTypes = {
+      add: PropTypes.func.isRequired,   //接收父组件的add函数
+      count: PropTypes.number.isRequired
+    }
+
+    // todo列表组件（列表部分）
+    class TodoList extends React.Component {
+      render () {
+        const {todos} = this.props
+        return (
+          <ul>
+            {
+              todos.map((todo, index) => <li key={index}>{todo}</li>)
+              //todos.map((todo, index) => {return <li key={index}>{todo}</li>})
+            }
+          </ul>
+        )
+      }
+    }
+    TodoList.propTypes = {
+      todos: PropTypes.array.isRequired
+    }
+
+    // 渲染应用组件标签
+    ReactDOM.render(<App />, document.getElementById('example'))
+
+  </script>
+</body>
+</html>

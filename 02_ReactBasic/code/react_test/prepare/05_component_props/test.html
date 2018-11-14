@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>04_component_props</title>
+</head>
+<body>
+
+<div id="example1"></div>
+<hr>
+<div id="example2"></div>
+<hr>
+<div id="example3"></div>
+
+<script type="text/javascript" src="../js/react.development.js"></script>
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 新的类型检查库 -->
+<script type="text/javascript" src="../js/prop-types.js"></script> 
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+
+  /*
+需求: 自定义用来显示一个人员信息的组件, 效果如页面. 说明
+  1). 如果性别没有指定, 默认为男
+  2). 如果年龄没有指定, 默认为18
+  (姓名必须传)
+  */
+
+  //1. 定义组件类
+  class Person extends React.Component {
+    render() {
+      console.log(this)   //props在这里  this是组件对象
+      return (
+        <ul>
+          <li>姓名: {this.props.name}</li>
+          <li>性别: {this.props.sex}</li>
+          <li>年龄: {this.props.age}</li>
+        </ul>
+      )
+    }
+  }
+  // 对标签属性进行限制  类型 required都指定了
+  Person.propTypes = {
+    name: PropTypes.string.isRequired,
+    sex: PropTypes.string,
+    age: PropTypes.number
+  }
+  // 指定属性的默认值(未传即赋默认)
+  Person.defaultProps = {
+    sex: '男',
+    age: 18
+  }
+
+  //2. 渲染组件标签
+  const person = {
+    name: 'Tom',
+    sex: '女',
+    age: 18
+  }
+  // ...的作用 打包or解包 此处render为解包 拆对象
+  //const arr1 = [1, 2, 3]  const arr2 = [6, ...arr1, 9]  => 此处为解包
+  //function fn(...as){}    fn(1, 2, 3)   => 此处为打包  as打包成数组
+  ReactDOM.render(<Person {...person}/>, document.getElementById('example1'))
+  const person2 = {
+    myName: 'JACK',
+    age: 17
+  }
+
+  ReactDOM.render(<Person name={person2.myName} age={person2.age}/>,
+    document.getElementById('example2'))
+
+ //简单组件
+ //1.定义组件
+ function PersonSimple(props){
+   return (
+     <ul>
+        <li>姓名:{props.name}</li>
+        <li>年龄:{props.age}</li>
+        <li>性别:{props.sex}</li>
+     </ul>
+   )
+ }
+ //2.数据以及渲染组件标签
+ const person3 = {
+   name: '郭德纲',
+   age: 18,
+   sex: '男'
+ }
+ ReactDOM.render(<PersonSimple name={person3.name} age={person3.age} sex={person3.sex} />,
+          document.getElementById('example3'))
+
+</script>
+</body>
+</html>
+

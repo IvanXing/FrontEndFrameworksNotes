@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>07_component_state</title>
+</head>
+<body>
+
+<div id="example"></div>
+
+<script type="text/javascript" src="../js/react.development.js"></script>
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+  /*
+  需求: 自定义组件, 功能说明如下
+    1. 显示h2标题, 初始文本为: 你喜欢我
+    2. 点击标题更新为: 我喜欢你
+  */
+  class Like extends React.Component {
+
+    constructor (props) { //状态赋初值
+      super(props)        //调用父类型React.Component的构造函数把props传给React.Component
+      // 初始化state状态，state是对象
+      this.state = {
+        isLikeMe: true
+      }
+      // 绑定this为组件对象 change中的this强制绑定为组件对象  运行的是 函数体一样的新函数
+      this.change = this.change.bind(this)
+    }
+
+    change () {
+      //内部this默认不是组件对象，而是undefined
+      //console.log('change()', this)
+      // 更新状态: this.setState() 设置新的状态对象
+      // this.state.isLikeMe = !this.state.isLikeMe // 不能更新更新某个状态
+      this.setState({
+        isLikeMe: !this.state.isLikeMe
+      })
+    }
+
+    render () {
+      console.log('render()')
+      //const {isLikeMe} = this.state //解构赋值  <h2>{isLikeMe}</h2>
+      const text = this.state.isLikeMe ? '你喜欢我' : '我喜欢你'
+      return <h2 onClick={this.change}>{text}</h2>  //this是组件对象
+      //上面不绑定 这里绑定也可以 效率低 每次更新都调用产生新函数
+      //return <h2 onClick={this.change.bind(this)}>{text}</h2>   
+    }
+  }
+  ReactDOM.render(<Like />, document.getElementById('example'))
+</script>
+</body>
+</html>
+
