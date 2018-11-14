@@ -14,9 +14,12 @@
 <script type="text/babel">
   /*
   验证:
-  虚拟DOM+DOM Diff算法: 最小化页面重绘
+  虚拟DOM+DOM Diff算法: 最小化页面重绘（判断哪片区域需要更新）
+  更新真实DOM要重绘
   */
 
+  //input框不更新 后面日期更新  只更新需要更新的部分
+  
   class HelloWorld extends React.Component {
     constructor(props) {
       super(props)
@@ -26,6 +29,7 @@
     }
 
     componentDidMount () {
+      // 箭头函数不需要bind
       setInterval(() => {
         this.setState({
             date: new Date()

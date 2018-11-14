@@ -32,12 +32,13 @@
       console.log('componentWillMount(): 初始化将要挂载')
     }
 
-    componentDidMount () {// 在此方法中启动定时器/绑定监听/发送ajax请求
+    componentDidMount () {// 在此方法中启动循环定时器/绑定监听/发送ajax请求
       console.log('componentDidMount(): 初始化已经挂载')
-      // 保存到当前组件对象中
+      // 保存到当前组件对象中（setTimeout只执行一次）
       this.intervalId = setInterval(function () {
-        console.log('--------')
+        console.log('----定时器执行----')
         // 得到当前opacity
+        // setInterval的this是window，下面需要bind，或者用箭头函数
         let {opacity} = this.state
         // 更新opacity
         opacity -= 0.1
@@ -68,14 +69,16 @@
     render() {
       console.log('render() 渲染组件')
       return (
+        //this.props接收content
+        //外边大括号是里面是js语句 里面大括号代表是一个对象
         <div>
           <h2 style={{opacity:this.state.opacity}}>{this.props.content}</h2>
-          <button onClick={this.removeComponent}>不活了</button>
+          <button onClick={this.removeComponent}>销毁</button>
         </div>
       )
     }
   }
-  ReactDOM.render(<Fade content="react学不会, 怎么办?"/>, document.getElementById('example'))
+  ReactDOM.render(<Fade content="若隐若现"/>, document.getElementById('example'))
 </script>
 </body>
 </html>
