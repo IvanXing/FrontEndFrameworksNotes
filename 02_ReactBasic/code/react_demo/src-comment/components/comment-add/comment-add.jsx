@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 class CommentAdd extends React.Component {
   constructor (props) {
     super(props)
+    //state这么写可以不写constructor (props)和super(props)
+    //state = { username: '', content: ''}
     this.state = {
       username: '',
       content: ''
@@ -12,7 +14,7 @@ class CommentAdd extends React.Component {
     this.changeUsername = this.changeUsername.bind(this)
     this.changeContent = this.changeContent.bind(this)
   }
-
+  //add = (xxx) =>{}
   addComment () {
     // 根据输入的数据创建评论对象
     let { username, content } = this.state
@@ -26,6 +28,7 @@ class CommentAdd extends React.Component {
     })
   }
 
+  //写箭头函数可以不bind
   changeUsername (event) {
     this.setState({
       username: event.target.value

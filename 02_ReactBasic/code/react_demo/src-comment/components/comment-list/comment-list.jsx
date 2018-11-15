@@ -9,6 +9,12 @@ class CommentList extends React.Component {
     super(props)
   }
 
+    //给组件类指定属性（另一种写法）
+    // static propTypes = {
+    //   comments: PropTypes.array.isRequired,
+    //   delete: PropTypes.func.isRequired
+    // }
+    
   render () {
     let comments = this.props.comments
     let display = comments.length > 0 ? 'none' : 'block'
