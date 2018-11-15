@@ -17,7 +17,8 @@ class UserList extends React.Component {
     users: null,
     error: null
   }
-
+  //list传递数据给search  兄弟间传递  先给父亲 再分发
+  //组件将要接收到新的props
   async componentWillReceiveProps(nextProps)  {
     let searchName = nextProps.searchName
     console.log('发送ajax请求', searchName)
@@ -27,7 +28,7 @@ class UserList extends React.Component {
     // 使用axios库
     axios.get(url)
       .then((response) => {
-        console.log(response)
+        console.log(response)   //注意map方法的使用
         this.setState({ loading: false, users: response.data.items })
       })
       .catch((error)=>{

@@ -23,6 +23,7 @@
   class MostStarRepo extends React.Component {
     constructor (props) {
       super(props)
+      //state = {xxx: '', yyy: ''}可以不写constructor和super
       this.state = {
         repoName: '',
         repoUrl: ''
@@ -30,6 +31,7 @@
     }
     
     componentDidMount () {
+      //发送异步ajax请求
       const url = `https://api.github.com/search/repositories?q=${this.props.searchWord}&sort=stars`
       // const url = `https://api.github.com/search/repositories2?q=${this.props.searchWord}&sort=stars`
       axios.get(url)
@@ -41,6 +43,13 @@
             repoName: repo.name,
             repoUrl: repo.html_url
           })
+          //解构赋值写法
+          // const {name, html_url} = = result.items[0]
+          // this.setState({
+          //   repoName: name,
+          //   repoUrl: html_url
+          // })
+
         })
         .catch(error => {
           // debugger
