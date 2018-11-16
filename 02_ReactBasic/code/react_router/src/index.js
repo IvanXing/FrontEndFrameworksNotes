@@ -7,6 +7,7 @@ import './index.css'
 
 ReactDOM.render(
   (
+    //用路由器组件包住 BrowserRouter或者HashRouter 来自于react-router-dom
     <BrowserRouter>
       <App/>
     </BrowserRouter>

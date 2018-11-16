@@ -20,7 +20,7 @@ export default class App extends React.Component {
         <div className="row">
           <div className="col-xs-2 col-xs-offset-2">
             <div className="list-group">
-              {/*导航路由链接*/}
+              {/*导航路由链接 MyNavlink封装了样式的自定义组件 */}
               <MyNavLink className="list-group-item" to='/about'>About</MyNavLink>
               <MyNavLink className="list-group-item" to='/home'>Home</MyNavLink>
             </div>
@@ -28,7 +28,7 @@ export default class App extends React.Component {
           <div className="col-xs-6">
             <div className="panel">
               <div className="panel-body">
-                {/*可切换的路由组件*/}
+                {/*可切换的路由组件 一次只显示一个 switch切换 path以及对应的组件*/}
                 <Switch>
                   <Route path='/about' component={About}/>
                   <Route path='/home' component={Home}/>

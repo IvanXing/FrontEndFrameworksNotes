@@ -15,8 +15,8 @@
 
   <script type="text/javascript" src="https://cdn.bootcss.com/history/4.7.2/history.js"></script>
   <script type="text/javascript">
-    let history = History.createBrowserHistory() // 方式一
-    history = History.createHashHistory() // 方式二
+    //let history = History.createBrowserHistory() // 方式一
+    //history = History.createHashHistory() // 方式二
     // console.log(history)
 
     function push (to) {
@@ -33,7 +33,7 @@
     }
 
     function replace (to) {
-      history.replace(to)
+      history.replace(to)      //替换 
     }
 
     history.listen((location) => {

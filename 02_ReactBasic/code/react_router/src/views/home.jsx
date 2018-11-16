@@ -24,5 +24,6 @@ export default function Home() {
         </Switch>
       </div>
     </div>
+    //Redirect切换过去时候自动显示news
   )
 }

@@ -9,7 +9,7 @@ const messageDetails = [
 export default function MessageDetail(props) {
 
   const id = props.match.params.id
-  const md = messageDetails.find(md => md.id===id*1)
+  const md = messageDetails.find(md => md.id===id*1) //返回第一个结果为true的元素
 
   return (
     <ul>
