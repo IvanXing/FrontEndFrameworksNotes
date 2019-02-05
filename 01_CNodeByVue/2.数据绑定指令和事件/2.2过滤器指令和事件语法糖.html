@@ -11,16 +11,22 @@
 </head>
 <body>
     <div id="dateApp">
+
         <div>过滤器</div>
         <div>{{date | formatDate}}</div>
         <!-- 过滤器可以串联，过滤器中第一个参数默认是处理的value，传入参数往后排 -->
+
         <div>指令和事件</div>
         <div v-text="apple"></div>
         <div v-html="banana"></div>
         <div v-bind:class= "className">v-bind变红</div>
+
         <div>v-on的用法,绑定事件监听器</div>
+
         <button v-on:click = "count">{{countNum}}</button>
+
         <div>语法糖</div>
+
         <button @click = "count">{{countNum}}</button>
         <div :class= "className">v-bind变红</div>
     </div>
@@ -28,7 +34,7 @@
 <script>
     //需求：在页面中实时显示当前时间
 
-    //在月日小时小于10时补0
+    //在 月日小时小于10 时补0 ,04 05..等等
     var plusDate = function(value){
         return value < 10 ? '0'+value : value;
     }
@@ -56,9 +62,9 @@
                 return year + '年' + month + '月' + day + '日' + hours + '时' + min + '分' + sec + '秒';
             }
         },
-        //方法都写在methods中
+        //vue中方法都写在methods中
         methods: {
-            count: function(){
+            count: function(){   //this代表本身Vue实例
                 this.countNum = this.countNum + 1;  //获取自己的countNum，点击一次加1
             }
         },
@@ -67,7 +73,7 @@
             var _this = this;  //this代表本身Vue实例
             //setInterval()定时器  xx毫秒执行一次function里的方法
             this.timer = setInterval(function(){
-                _this.date = new Date();                    //访问date不需要$
+                _this.date = new Date();             //访问date不需要$(注意什么时候需要$)
             },1000)
         },
         //vue实例销毁时，清除定时器

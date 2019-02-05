@@ -11,12 +11,16 @@
         <div>{{text}}</div>
         <!-- 字符串用逗号分隔返回数组，反转，变成数字 -->
         <div>{{text.split(',').reverse().join(',')}}</div>
+
         <div>使用计算属性</div>
         <div>{{reverseText}}</div>
+
         <div>计算属性的缓存</div>
         <div>{{now}}</div>  <!-- 当前距1970年的时间戳 -->
-        <div>通过methods拿到时间戳（计算属性直接写，方法需要加括号）</div>
+
+        <div>通过methods拿到时间戳（计算属性(是属性不需要括号)直接写，方法需要加括号）</div>
         <div>{{thisTime()}}</div>
+
     </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>  
 <script>
@@ -25,7 +29,8 @@
     var app = new Vue({
         el: "#demo",
         data: {
-            text: '123, 456, 789'
+            text: '123, 456, 789',     //app.text = '666'   页面中方法，重新渲染就会执行 缓存
+            msg:  'eating'     //改变了页面上没有也不执行（希不希望使用缓存==》决定使用方法还是计算属性）
         },
         //定义计算属性
         //如果计算属性直接跟一个function，默认是getter函数

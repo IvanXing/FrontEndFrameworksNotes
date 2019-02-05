@@ -41,7 +41,8 @@
                 for( j = 0; i < this.pakage2.length; j++){
                     prices += this.pakage2[j].price * this.pakage2[j].count;
                 }
-                return prices + '--' + app2.msg;  //计算属性还可以依赖多个 Vue 实例的数据  用了app2的msg
+                //计算属性还可以依赖多个 Vue 实例的数据  用了app2的msg
+                return prices + '--' + app2.msg;  
             }
         },
     })
